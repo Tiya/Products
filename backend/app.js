@@ -3,6 +3,7 @@ const ProductData = require('./src/model/Productdata');
 
 const cors = require('cors');
 var bodyparser=require('body-parser');
+
 const jwt = require('jsonwebtoken')
 var app = new express();
 app.use(cors());
@@ -11,23 +12,23 @@ username='admin';
 password='1234';
 
 
-// function verifyToken(req, res, next) {
-//     if(!req.headers.authorization) {
-//       return res.status(401).send('Unauthorized request')
-//     }
-//     let token = req.headers.authorization.split(' ')[1]
-//     if(token === 'null') {
-//       return res.status(401).send('Unauthorized request')    
-//     }
-//     let payload = jwt.verify(token, 'secretKey')
-//     if(!payload) {
-//       return res.status(401).send('Unauthorized request')    
-//     }
-//     req.userId = payload.subject
-//     next()
-//   }
+function verifyToken(req, res, next) {
+    if(!req.headers.authorization) {
+      return res.status(401).send('Unauthorized request')
+    }
+    let token = req.headers.authorization.split(' ')[1]
+    if(token === 'null') {
+      return res.status(401).send('Unauthorized request')    
+    }
+    let payload = jwt.verify(token, 'secretKey')
+    if(!payload) {
+      return res.status(401).send('Unauthorized request')    
+    }
+    req.userId = payload.subject
+    next()
+  }
 
-app.post('/insert',function(req,res){
+app.post('/insert',verifyToken,function(req,res){
     res.header("Access-Control-Allow-Origin","*")
     res.header('Access-Control-Allow-Methods: GET,POST,PATCH,PUT,DELETE')
     console.log(req.body);
@@ -62,22 +63,22 @@ app.get('/products',function(req,res){
 //     });
 // })
 
-// app.post('/login', (req, res) => {
-//     let userData = req.body
+app.post('/login', (req, res) => {
+    let userData = req.body
     
       
-//         if (!username) {
-//           res.status(401).send('Invalid Username')
-//         } else 
-//         if ( password !== userData.password) {
-//           res.status(401).send('Invalid Password')
-//         } else {
-//           let payload = {subject: username+password}
-//           let token = jwt.sign(payload, 'secretKey')
-//           res.status(200).send({token})
-//         }
+        if (!username) {
+          res.status(401).send('Invalid Username')
+        } else 
+        if ( password !== userData.password) {
+          res.status(401).send('Invalid Password')
+        } else {
+          let payload = {subject: username+password}
+          let token = jwt.sign(payload, 'secretKey')
+          res.status(200).send({token})
+        }
       
-//     })
+    })
 
 //     app.put('/update',(req,res)=>{
 //       console.log(req.body)

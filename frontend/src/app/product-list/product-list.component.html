@@ -33,10 +33,10 @@
                         <td>{{ product.releaseDate }}</td>
                         <td>{{ product.price }}</td>
                         <td>{{ product.starRating }}</td>
-                        <!-- <td>
-                          <button class="btn btn-warning" style="cursor:pointer" *ngIf="_auth.loggedIn()" (click)="editProduct(product)" style="margin-left: 20px;"> Edit</button>
-                          <button class="btn btn-danger" style="cursor:pointer" *ngIf="_auth.loggedIn()"(click)="deleteProduct(product)"> Delete</button>
-                        </td> -->
+                        <td>
+                          <button class="btn btn-warning" style="cursor:pointer" *ngIf="_auth.loggedIn()" style="margin-left: 20px;"> Edit</button>
+                          <button class="btn btn-danger" style="cursor:pointer" *ngIf="_auth.loggedIn()"> Delete</button>
+                        </td>
                       </tr>    
                 </tbody>
             </table>

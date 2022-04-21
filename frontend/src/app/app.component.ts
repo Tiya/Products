@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Products';
+  constructor(public _auth:AuthService,
+    private _router:Router){
+
+}
+logoutUser()
+{
+localStorage.removeItem('token')
+this._router.navigate(['/products'])
+}
+loggedUser()
+{
+  this._router.navigate(['/add'])
+}
 }
